@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -205,7 +206,7 @@ public class DoubleLinkList<T> implements List<T> {
         if(index < 0 || index > ce)
             throw new IndexOutOfBoundsException();
         
-            Node nuevo = new Node<T>(info);
+            Node<T> nuevo = new Node<T>(info);
 
             if (isEmpty()) {
                 first = nuevo;
@@ -217,7 +218,7 @@ public class DoubleLinkList<T> implements List<T> {
             }else if (index != 0) {
                 int pos = 0;
                
-                Node aux = first;
+                Node<T> aux = first;
     
                 while (pos < index) {
                     aux = aux.next;
@@ -242,32 +243,61 @@ public class DoubleLinkList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        // TODO Auto-generated method stub
-        return false;
+        if (c == null || c.isEmpty()) {
+            return false;
+        }
+        for (T info : c) {
+            add(info);
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        // TODO Auto-generated method stub
-        return false;
+        if (c == null || c.isEmpty()) {
+            return false;
+        }
+        if (index < 0 || index > ce) {
+            throw new IndexOutOfBoundsException();
+        }
+
+       
+        for (T info : c) {
+            add(index++, info);
+        }
+
+        return true;
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-
+       first = null;
+       last = null;
+       ce = 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        // TODO Auto-generated method stub
+        Node<T> aux = first;
+
+        while (aux != null) {
+            if (aux.info.equals(o)) {
+                return true;
+            }
+            aux = aux.next;
+        }
+
         return false;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        for (Object o : c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean checkIndex(int index) {
@@ -282,24 +312,24 @@ public class DoubleLinkList<T> implements List<T> {
 
         if (first != null) {
             int pos = 0;
-            Node aux = first;
+            Node<T> aux = first;
             while (pos++ < index) {
                 aux = aux.next;
             }
-            return (T) aux.info;
+            return aux.info;
         }
 
         return null;
     }
 
-    public Node getNode(int index) {
+    public Node<T> getNode(int index) {
         if (!checkIndex(index)) {
             throw new ArrayIndexOutOfBoundsException("Index no válido");
         }
 
         if (first != null) {
             int pos = 0;
-            Node aux = first;
+            Node<T> aux = first;
             while (pos++ < index) {
                 aux = aux.next;
             }
@@ -311,8 +341,19 @@ public class DoubleLinkList<T> implements List<T> {
 
     @Override
     public int indexOf(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+        if (!isEmpty()) {
+            Node<T> aux = first;
+            int pos = 0;
+            while (aux != null) {
+                if (aux.info.equals(o)) {
+                    return pos;
+                }
+                aux = aux.next;
+                pos++;
+            }
+            return -1;
+        } 
+        return -1;
     }
 
     @Override
@@ -329,8 +370,19 @@ public class DoubleLinkList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+        if (!isEmpty()) {
+            Node<T> aux = last;
+            int pos = size() - 1;
+            while (aux != null) {
+                if (aux.info.equals(o)) {
+                    return pos;
+                }
+                aux = aux.prev;
+                pos--;
+            }
+            return -1;
+        } 
+        return -1;
     }
 
     @Override
@@ -345,7 +397,7 @@ public class DoubleLinkList<T> implements List<T> {
 
     @Override
     public boolean remove(Object info) {
-        Node aux = first;
+        Node<T> aux = first;
 
         while (aux != null) {
             if (aux.info.equals(info)) {
@@ -372,26 +424,87 @@ public class DoubleLinkList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        // TODO Auto-generated method stub
-        return null;
+        if (index < 0 || index >= ce) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        Node<T> aux = first;
+        
+        int pos = 0;
+
+        while (pos < index) {
+            aux = aux.next;
+        }
+
+        T info = null;
+
+        if(aux.prev != null && aux.next == null){ // eliminar ultima pos
+            info = last.info;
+            last = last.prev;
+            last.next = null;
+        }else if (aux.prev != null) {// eliminer pos intermedia
+            info = aux.info;
+            aux.prev.next = aux.next; 
+            aux.next.prev = aux.prev;
+        } else {// eliminar primera pos
+            info = first.info;
+            first = aux.next; 
+            first.prev = null;
+        }
+
+        aux.next = null;
+        ce--;
+
+        return info;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        if (!isEmpty() && !c.isEmpty()) {
+            boolean retorno = false;
+            for (Object o : c) {
+                if (remove(o))
+                    retorno = true;
+            }
+            return retorno;
+        } else
+            return false;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean cambio = false;
+        Node<T> aux = first;
+
+        while (aux != null) {
+            if (!c.contains(aux.info)) {
+                remove(aux.info);
+                cambio = true;
+            }
+        }
+
+        return cambio;
     }
 
     @Override
-    public T set(int index, T element) {
-        // TODO Auto-generated method stub
-        return null;
+    public T set(int index, T info) {
+        if (index < 0 || index >= ce) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (!isEmpty()) {
+            Node<T> aux = first;
+            int pos = 0;
+            T oldInfo = null;
+
+            while (pos < index) {
+                aux = aux.next;
+            }
+
+            oldInfo = aux.info;
+            aux.info = info;
+            return oldInfo;
+        } else
+            return null;
     }
 
     @Override
@@ -401,20 +514,50 @@ public class DoubleLinkList<T> implements List<T> {
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        // TODO Auto-generated method stub
-        return null;
+        if (fromIndex < 0 || fromIndex >= ce || toIndex > fromIndex || toIndex >= ce) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (!isEmpty()) {
+            List<T> subList = new DoubleLinkList<>();
+            while (fromIndex <= toIndex) {
+                subList.add(get(fromIndex));
+                fromIndex++;
+            }
+            return subList;
+        } else
+            return null;
     }
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+        Object[] arr = new Object[ce];
+        Node<T> aux = first;
+        int i = 0;
+        while (aux != null) {
+            arr[i++] = aux.info;
+            aux = aux.next;
+        }
+        return arr;
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        // TODO Auto-generated method stub
-        return null;
+        if (a.length < ce) {
+            a = Arrays.copyOf(a, ce);
+        }
+        
+        Node<T> aux = (Node<T>) first;
+
+        int i = 0;
+        while (aux != null) {
+            a[i++] = aux.info;
+            aux = aux.next;
+        }
+        if (i < a.length) {
+            a[i] = null;
+        }
+        return a;
     }
 
 }

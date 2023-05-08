@@ -75,14 +75,14 @@ public class LinkList<T> implements List<T> {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Posición no válida");
 
-        Node nuevo = new Node<T>(info);
+        Node<T> nuevo = new Node<T>(info);
 
         if (isEmpty()) {
             first = nuevo;
         } else if (index != 0) {
             int pos = 0;
-            Node auxBack = null;
-            Node aux = first;
+            Node<T> auxBack = null;
+            Node<T> aux = first;
 
             while (pos < index) {
                 auxBack = aux;
@@ -209,14 +209,14 @@ public class LinkList<T> implements List<T> {
     }
 
     //retorna un nodo  especifico dado un index
-    public Node getNode(int index) {
+    public Node<T> getNode(int index) {
         if (!checkIndex(index)) {
             throw new ArrayIndexOutOfBoundsException("Index no válido");
         }
 
         if (first != null) {
             int pos = 0;
-            Node aux = first;
+            Node<T> aux = first;
             while (pos++ < index) {
                 aux = aux.next;
             }
@@ -288,8 +288,8 @@ public class LinkList<T> implements List<T> {
     // elimina el objeto dado
     @Override
     public boolean remove(Object info) {
-        Node auxBack = null;
-        Node aux = first;
+        Node<T> auxBack = null;
+        Node<T> aux = first;
         boolean enc = false;
 
         while (aux != null && !enc) {
@@ -323,8 +323,8 @@ public class LinkList<T> implements List<T> {
 
         if (!isEmpty()) {
             T info = null;
-            Node auxBack = null;
-            Node aux = first;
+            Node<T> auxBack = null;
+            Node<T> aux = first;
             int pos = 0;
 
             while (pos < index) {
@@ -334,14 +334,14 @@ public class LinkList<T> implements List<T> {
             }
 
             if (auxBack != null && aux.next == null) { // eliminer ultima pos
-                info = (T) aux.info;
+                info =  aux.info;
                 auxBack.next = null;
 
             } else if (auxBack != null) {
-                info = (T) aux.info;
+                info = aux.info;
                 auxBack.next = aux.next; // eliminer pos intermedia
             } else {
-                info = (T) aux.info;
+                info =  aux.info;
                 first = aux.next; // eliminar primera pos
             }
 

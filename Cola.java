@@ -1,5 +1,7 @@
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 //cola de prioridad es lo mismo menos el metodo add
@@ -24,7 +26,30 @@ public class Cola<T> implements Queue<T> {
     public Cola() {
     }
 
-    
+    private class ColaIterator implements Iterator<T> {
+        private Node<T> current = first;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            T info = current.info;
+            current = current.next;
+            return info;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
     @Override
     public boolean add(T info) {
         Node<T> nuevo = new Node<T>(info);
@@ -39,12 +64,17 @@ public class Cola<T> implements Queue<T> {
         return true;
     }
 
+    // retorna la info del 1er elemento si esta vacia la cola una exepcion
     @Override
     public T element() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cola vacia");
+        }
+
+        return first.info;
     }
 
+    //KSJDNFLKJAHLSKDVNHDFHLAKJ
     @Override
     public boolean offer(T e) {
         // TODO Auto-generated method stub
@@ -61,12 +91,6 @@ public class Cola<T> implements Queue<T> {
 
     @Override
     public T poll() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public T remove() {
         if (!isEmpty()) {
             T info = first.info;
             first = first.next;
@@ -77,11 +101,22 @@ public class Cola<T> implements Queue<T> {
     }
 
     @Override
+    public T remove() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        T info = first.info;
+        first = first.next;
+        ce--;
+        return info;
+    }
+
+    @Override
     public boolean addAll(Collection<? extends T> c) {
         Iterator itr = c.iterator();
 
-        while(itr.hasNext()){
-            add( (T) itr.next());
+        while (itr.hasNext()) {
+            add((T) itr.next());
         }
         return false;
     }
@@ -111,8 +146,12 @@ public class Cola<T> implements Queue<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        for (Object o : c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -122,26 +161,67 @@ public class Cola<T> implements Queue<T> {
 
     @Override
     public Iterator<T> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new ColaIterator();
     }
 
+    //elimina el elemento que coincida con la informacion dada
     @Override
-    public boolean remove(Object o) {
-        // TODO Auto-generated method stub
+    public boolean remove(Object info) {
+        Node<T> auxBack = null;
+        Node<T> aux = first;
+       
+
+        while (aux != null) {
+            if (aux.info.equals(info)) {
+                if (auxBack != null && aux.next == null) { // eliminer ultima pos
+                    last = auxBack;
+                    last.next = null;
+                    
+                } else if (auxBack != null) {
+                    auxBack.next = aux.next; // eliminer pos intermedia
+                } else {
+                    first = aux.next; // eliminar primera pos
+                }
+                aux.next = null;
+             
+                ce--;
+                return true;
+            } else {
+                auxBack = aux;
+                aux = aux.next;
+            }
+        }
         return false;
     }
 
+    // elimina todos los objetos que esten en la coleccion dadda
     @Override
     public boolean removeAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        if (!isEmpty() && !c.isEmpty()) {
+            boolean retorno = false;
+            for (Object o : c) {
+                if (remove(o))
+                    retorno = true;
+            }
+            return retorno;
+        } else
+            return false;
     }
 
+    // la lista conserva solo los elementos que estan en la coleccion
     @Override
     public boolean retainAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean cambio = false;
+        Node<T> aux = first;
+
+        while (aux != null) {
+            if (!c.contains(aux.info)) {
+                remove(aux.info);
+                cambio = true;
+            }
+        }
+
+        return cambio;
     }
 
     @Override
@@ -151,14 +231,33 @@ public class Cola<T> implements Queue<T> {
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+        Object[] arr = new Object[ce];
+        Node<T> aux = first;
+        int i = 0;
+        while (aux != null) {
+            arr[i++] = aux.info;
+            aux = aux.next;
+        }
+        return arr;
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        // TODO Auto-generated method stub
-        return null;
+        if (a.length < ce) {
+            a = Arrays.copyOf(a, ce);
+        }
+        
+        Node<T> aux = (Node<T>) first;
+
+        int i = 0;
+        while (aux != null) {
+            a[i++] = aux.info;
+            aux = aux.next;
+        }
+        if (i < a.length) {
+            a[i] = null;
+        }
+        return a;
     }
 
 }
