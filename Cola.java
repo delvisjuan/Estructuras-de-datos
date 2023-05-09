@@ -75,13 +75,24 @@ public class Cola<T> implements Queue<T> {
         return first.info;
     }
 
-    // KSJDNFLKJAHLSKDVNHDFHLAKJ
+    
     // agerga un nuevo elemento de ser psoible debido a las restricciones de
     // capacidad a la cola al principio
     @Override
     public boolean offer(T e) {
-        // TODO Auto-generated method stub
-        return false;
+        if (e == null) {
+            throw new NullPointerException();
+        }
+        Node<T> nuevo = new Node<T>(e);
+        if (isEmpty()) {
+            first = nuevo;
+            last = nuevo;
+        } else {
+            last.next = nuevo;
+            last = nuevo;
+        }
+        ce++;
+        return true;
     }
 
     // retorna la informacion del 1er elemento
