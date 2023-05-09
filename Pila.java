@@ -1,3 +1,4 @@
+import java.util.Collection;
 
 public class Pila<T> { // FILO First In Last Out
 
@@ -86,4 +87,12 @@ public class Pila<T> { // FILO First In Last Out
         }
         return salida;
     }
+
+    //repaso
+    //agrega todos los elementos de la coleccion
+    public void pushAll(Collection<? extends T> c){
+        for (T info : c) {
+            push(info);
+        }
+     }
 }

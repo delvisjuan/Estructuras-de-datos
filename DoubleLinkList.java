@@ -560,4 +560,15 @@ public class DoubleLinkList<T> implements List<T> {
         return a;
     }
 
+    //repaso
+    // agrega los elementos de la coloeccion(c) al principio de la lista respetando el orden de la coleccion
+    //(no nativo de esta lista)
+    public boolean addAllFront(Collection<? extends T> c) {
+        int index = 0;
+        for (T t : c) {
+            add(index++, t);            
+        }
+        return true;
+    }
+
 }

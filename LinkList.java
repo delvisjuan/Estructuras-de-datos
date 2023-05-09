@@ -290,20 +290,19 @@ public class LinkList<T> implements List<T> {
     public boolean remove(Object info) {
         Node<T> auxBack = null;
         Node<T> aux = first;
-        boolean enc = false;
+        
 
-        while (aux != null && !enc) {
+        while (aux != null) {
             if (aux.info.equals(info)) {
                 if (auxBack != null && aux.next == null) { // eliminer ultima pos
                     auxBack.next = null;
-                    ;
                 } else if (auxBack != null) {
                     auxBack.next = aux.next; // eliminer pos intermedia
                 } else {
                     first = aux.next; // eliminar primera pos
                 }
                 aux.next = null;
-                enc = true;
+               
                 size--;
                 return true;
             } else {

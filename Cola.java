@@ -50,6 +50,7 @@ public class Cola<T> implements Queue<T> {
         }
     }
 
+    // agerga un nuevo elemento a la cola al principio
     @Override
     public boolean add(T info) {
         Node<T> nuevo = new Node<T>(info);
@@ -74,13 +75,16 @@ public class Cola<T> implements Queue<T> {
         return first.info;
     }
 
-    //KSJDNFLKJAHLSKDVNHDFHLAKJ
+    // KSJDNFLKJAHLSKDVNHDFHLAKJ
+    // agerga un nuevo elemento de ser psoible debido a las restricciones de
+    // capacidad a la cola al principio
     @Override
     public boolean offer(T e) {
         // TODO Auto-generated method stub
         return false;
     }
 
+    // retorna la informacion del 1er elemento
     @Override
     public T peek() {
         if (!isEmpty()) {
@@ -89,6 +93,8 @@ public class Cola<T> implements Queue<T> {
         return null;
     }
 
+    // elimina el 1er elemento de la cola. Y retorna su informacion. Null si la
+    // lista esta vacia
     @Override
     public T poll() {
         if (!isEmpty()) {
@@ -100,6 +106,8 @@ public class Cola<T> implements Queue<T> {
         return null;
     }
 
+    // elimina el 1er elemento de la cola. Y retorna su informacion. excepcion si la
+    // lista esta vacia
     @Override
     public T remove() {
         if (isEmpty()) {
@@ -111,16 +119,19 @@ public class Cola<T> implements Queue<T> {
         return info;
     }
 
+    // agrega a la cola todos los elementos de una coleccion
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        Iterator itr = c.iterator();
-
-        while (itr.hasNext()) {
-            add((T) itr.next());
+        if (c == null || c.isEmpty()) {
+            return false;
         }
-        return false;
+        for (T info : c) {
+            add(info);
+        }
+        return true;
     }
 
+    // vacia la lista
     @Override
     public void clear() {
         first = null;
@@ -128,6 +139,7 @@ public class Cola<T> implements Queue<T> {
 
     }
 
+    // verifica si existe el elemento en la cola
     @Override
     public boolean contains(Object o) {
         if (!isEmpty()) {
@@ -144,6 +156,7 @@ public class Cola<T> implements Queue<T> {
         return false;
     }
 
+    // verifica si existen todos los elementos de la coleccion en la cola
     @Override
     public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
@@ -154,6 +167,7 @@ public class Cola<T> implements Queue<T> {
         return true;
     }
 
+    // si esta vacia o no
     @Override
     public boolean isEmpty() {
         return ce == 0;
@@ -164,26 +178,25 @@ public class Cola<T> implements Queue<T> {
         return new ColaIterator();
     }
 
-    //elimina el elemento que coincida con la informacion dada
+    // elimina el elemento que coincida con la informacion dada
     @Override
     public boolean remove(Object info) {
         Node<T> auxBack = null;
         Node<T> aux = first;
-       
 
         while (aux != null) {
             if (aux.info.equals(info)) {
                 if (auxBack != null && aux.next == null) { // eliminer ultima pos
                     last = auxBack;
                     last.next = null;
-                    
+
                 } else if (auxBack != null) {
                     auxBack.next = aux.next; // eliminer pos intermedia
                 } else {
                     first = aux.next; // eliminar primera pos
                 }
                 aux.next = null;
-             
+
                 ce--;
                 return true;
             } else {
@@ -246,7 +259,7 @@ public class Cola<T> implements Queue<T> {
         if (a.length < ce) {
             a = Arrays.copyOf(a, ce);
         }
-        
+
         Node<T> aux = (Node<T>) first;
 
         int i = 0;
@@ -258,6 +271,70 @@ public class Cola<T> implements Queue<T> {
             a[i] = null;
         }
         return a;
+    }
+
+    // Repaso
+    // insertar un elemento en una cola en una pos determinada sin alterar el orden
+    // actual. (No es un metodo nativo de las colas)
+    public void add(int index, T info) {
+        if (index < 0 || index > ce)
+            throw new IndexOutOfBoundsException("Posición no válida");
+
+        Node<T> nuevo = new Node<T>(info);
+
+        if (isEmpty()) {
+            first = nuevo;
+            last = first;
+        } else if (index != 0) {
+            int pos = 0;
+            Node<T> auxBack = null;
+            Node<T> aux = first;
+
+            while (pos < index) {
+                auxBack = aux;
+                aux = aux.next;
+                pos++;
+            }
+
+            nuevo.next = aux;
+            auxBack.next = nuevo;
+
+        } else {
+            nuevo.next = first;
+            first = nuevo;
+
+        }
+
+        ce++;
+
+    }
+
+    // eliminar todas las ocurrencias de un elemento en la cola
+    public void removeElemento(Object info) {
+        Node<T> auxBack = null;
+        Node<T> aux = first;
+
+        while (aux != null) {
+            if (aux.info.equals(info)) {
+                if (auxBack != null && aux.next == null) { // eliminer ultima pos
+                    last = auxBack;
+                    last.next = null;
+                    
+                } else if (auxBack != null) {
+                    auxBack.next = aux.next; // eliminer pos intermedia
+                } else {
+                    first = aux.next; // eliminar primera pos
+                }
+                aux.next = null;
+
+                ce--;
+
+            } else {
+                auxBack = aux;
+                aux = aux.next;
+            }
+        }
+
     }
 
 }
