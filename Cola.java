@@ -3,6 +3,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.Stack;
 
 //cola de prioridad es lo mismo menos el metodo add
 //FIFO First In First Out
@@ -346,6 +347,30 @@ public class Cola<T> implements Queue<T> {
             }
         }
 
+    }
+
+    public void invertir(){
+        Stack<T> aux = new Stack<>();
+
+        while (size() != 0) {
+            aux.push(remove());
+        }
+
+        while (aux.size() != 0) {
+            add(aux.pop());
+        }
+    }
+
+    public void resize(int n){
+        if(n < size()){
+            int delete = size() - n;
+
+            while(delete != 0){
+                remove();
+                delete--;
+            }
+            
+        }
     }
 
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // List<Integer> list = new LinkList<>();
-        List<Integer> list = new DoubleLinkList<>();
+        LinkList<Integer> list = new LinkList<>();
+       // List<Integer> list = new DoubleLinkList<>();
 
         // Repaso.agregarNumerosAleatorios(list, 5);
 
@@ -23,7 +23,7 @@ public class Main {
         list.add(3);
         list.add(4);
 
-        list.add(list.size() -1, 4);
+        System.out.println(list.elementoK(3));
 
         // lista.add(34);
         // lista.add(5432);
@@ -35,9 +35,9 @@ public class Main {
 
         // list.addAll(6,lista);
         
-        for (Integer a : list) {
-            System.out.println(a);
-        }
+        // for (Integer a : list) {
+        //     System.out.println(a);
+        // }
         
         // list.remove((Integer) 5);
         // System.out.println("\n\n");

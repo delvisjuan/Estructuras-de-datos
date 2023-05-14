@@ -462,4 +462,20 @@ public class LinkList<T> implements List<T> {
         return a;
     }
 
+    public T elementoK(int n){
+        if(n <= 0 || n > size())
+            throw new IndexOutOfBoundsException("Index no valido");
+
+        Node<T> aux = first;
+
+        int pos = 0;
+
+        while(pos < (size() - n)){
+            aux = aux.next;
+            pos++;
+        }
+
+        return aux.info;
+    }
+
 }

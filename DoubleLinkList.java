@@ -571,4 +571,24 @@ public class DoubleLinkList<T> implements List<T> {
         return true;
     }
 
+    //intercambiar elementos
+    public void intercambiar(int n){
+        if(n < 0 || n >= size() - 1)
+            throw new IndexOutOfBoundsException("Index no valido");
+        
+        Node<T> aux = first;
+
+        int pos = 0;
+
+        while(pos < n){
+            aux = aux.next;
+            pos++;
+        }
+
+        T info = aux.info;
+
+        aux.info = aux.next.info;
+        aux.next.info = info;
+    }
+
 }

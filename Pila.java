@@ -95,4 +95,25 @@ public class Pila<T> { // FILO First In Last Out
             push(info);
         }
      }
+/*
+     public T minElemento(){
+        if(!isEmpty()){
+            Node<T> min = top;
+            Node<T> aux = top.prev;
+
+            while(aux != null){
+            
+                if(min.info.compareTo(aux.info) > 0){
+                    min = aux;
+                }
+                aux = aux.prev;
+            }
+
+            return min.info;
+
+        }
+
+        return null;
+     }
+     */
 }
