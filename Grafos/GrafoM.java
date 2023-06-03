@@ -1,8 +1,9 @@
 package Grafos;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GrafoM<T>{
+public class GrafoM<T> {
     private int matriz[][];
     private Object[] vertices;
 
@@ -11,28 +12,34 @@ public class GrafoM<T>{
         this.vertices = vertices;
     }
 
-    //implementar
-    private int find(Object o){
+    // implementar
+    private int find(Object o) {
+        for (int i = 0; i < vertices.length; i++) {
+            if (vertices[i].equals(o)) {
+                return i;
+            }
+        }
+
         return -1;
     }
 
-    public boolean conectarArista(Object org, Object dest){
+    public boolean conectarArista(Object org, Object dest) {
         int posOrigen = find(org);
         int posDest = find(dest);
 
-        if(posDest != -1 && posOrigen != -1){
+        if (posDest != -1 && posOrigen != -1) {
             matriz[posOrigen][posDest] = 1;
             return true;
         }
-                
+
         return false;
     }
 
-    public boolean eliminarArista(Object org, Object dest){
+    public boolean eliminarArista(Object org, Object dest) {
         int posOrigen = find(org);
         int posDest = find(dest);
 
-        if(posDest != -1 && posOrigen != -1){
+        if (posDest != -1 && posOrigen != -1) {
             matriz[posOrigen][posDest] = 0;
             return true;
         }
@@ -40,29 +47,65 @@ public class GrafoM<T>{
         return false;
     }
 
-    //implementar
-    public boolean exist(Object org){
-        return false;
+    // implementar
+    public boolean exist(Object org) {
+        return (find(org) != -1);
     }
 
-    //implementar
+    // implementar
     public boolean isAdy(Object a, Object b) {
-        return false;
+        int org = find(a);
+        int dest = find(b);
+
+        if(org == -1 || dest == -1)
+            return false;
+
+        return (matriz[org][dest] == 1);
     }
-    //implementar
-    //cantidad de aristas
+
+    // implementar
+    // cantidad de aristas
     public int size() {
-        return -1;
+        int count = 0;
+
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                if (matriz[i][j] == 1)
+                    count++;
+            }
+        }
+
+        return count;
     }
 
-    //implementar
-    //cantidad de vertices
+    // implementar
+    // cantidad de vertices
     public int order() {
-        return -1;
+        return vertices.length;
     }
 
-        //implementar
+    // implementar
     private List<Object> findAdy(Object o) {
-        return null;
+        List<Object> ady = new ArrayList<>();
+        int org = find(o);
+
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[org][i] == 1) {
+                ady.add(vertices[i]);
+            }
+        }
+        return ady;
+    }
+    // implementar
+    private int findAdy2(Object o) {
+        int count = 0;
+        int org = find(o);
+
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[org][i] == 1) {
+                count++;
+            }
+        }
+        return count;
     }
 }

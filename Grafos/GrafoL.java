@@ -21,6 +21,11 @@ public class GrafoL<T>{
 
     //implementar
     private Vertice find(T o){
+        for (Vertice v : vertices) {
+            if(v.info.equals(o)){
+                return v;
+            }
+        }
         return null;
     }
 
@@ -38,34 +43,55 @@ public class GrafoL<T>{
     }
 
     public boolean eliminarArista(T org, T dest){
-       
+        Vertice a = find(org);
+        Vertice b = find(dest);
 
+        if(a != null && b != null){
+            return a.ady.remove(b);
+        }
+                
         return false;
     }
 
     //implementar
-    public boolean exist(T org){
-        return false;
+    public boolean exist(T o){
+        return (find(o) != null);
     }
 
     //implementar
     public boolean isAdy(T a, T b) {
-        return false;
+        Vertice aVert = find(a); 
+        Vertice bVert = find(b); 
+
+        if(aVert == null || bVert == null){
+            return false;
+        }
+
+        return aVert.ady.contains(bVert);
     }
+
     //implementar
     //cantidad de aristas
     public int size() {
-        return -1;
+        int count = 0;
+        for (Vertice v : vertices) {
+            count += v.ady.size();
+        }
+        return count;
     }
 
     //implementar
     //cantidad de vertices
     public int order() {
-        return -1;
+        return vertices.size();
     }
 
     //implementar
     private List<Object> findAdy(T o) {
-        return null;
+        Vertice vert = find(o);
+
+        if(vert == null)
+            throw new IllegalStateException();
+        return vert.ady;
     }
 }
