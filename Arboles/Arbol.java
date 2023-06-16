@@ -1,7 +1,6 @@
 package Arboles;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Arbol<T> {
 
