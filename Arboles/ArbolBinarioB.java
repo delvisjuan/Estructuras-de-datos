@@ -98,7 +98,21 @@ public class ArbolBinarioB<T extends Comparable<T>> {
 
             root.right = deleteRec(root.right, key);
         }
+        return root;
+    }
 
+    public T minValue(Node<T> root){
+        return minValueRec(root);
+
+    }
+
+    private T minValueRec(Node<T> root){
+        // casos base de parada
+        if (root.left == null)
+            return root.key;
+
+        //desplazarse a la izquiera en busca del menor valor
+        return minValueRec(root.left);
     }
 
 }
