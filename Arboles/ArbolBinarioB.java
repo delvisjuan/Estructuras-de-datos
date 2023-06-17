@@ -94,14 +94,14 @@ public class ArbolBinarioB<T extends Comparable<T>> {
 
             //nodo con dis hijos:
 
-            root.key = minValue(root.right);// implementar
+            root.key = minValueRec(root.right);// implementar
 
             root.right = deleteRec(root.right, key);
         }
         return root;
     }
 
-    public T minValue(Node<T> root){
+    public T minValue(){
         return minValueRec(root);
 
     }
@@ -113,6 +113,20 @@ public class ArbolBinarioB<T extends Comparable<T>> {
 
         //desplazarse a la izquiera en busca del menor valor
         return minValueRec(root.left);
+    }
+
+    public T maxValue(){
+        return maxValueRec(root);
+
+    }
+
+    private T maxValueRec(Node<T> root){
+        // casos base de parada
+        if (root.right == null)
+            return root.key;
+
+        //desplazarse a la izquiera en busca del menor valor
+        return maxValueRec(root.right);
     }
 
 }
