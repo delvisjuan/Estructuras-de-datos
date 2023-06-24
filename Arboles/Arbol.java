@@ -2,13 +2,13 @@ package Arboles;
 
 import java.util.ArrayList;
 
-public class Arbol<T> {
+public class Arbol<T extends Comparable<T>> {
 
     // implementar los metodos eliminar, getFather(T info), ancestros(info) todos
     // los padres de un nodo
 
     // Clase Privada para el nodo padre
-    private class Padre<T> {
+    private class Padre<T extends Comparable<T>> {
         public T info;
         public ArrayList<T> hijos = new ArrayList<>();
 
@@ -200,4 +200,29 @@ public class Arbol<T> {
 
     }
 
+
+    //Metodos de repaso no dados en el aula
+    public T menor(){
+        T menor = raiz.info;
+
+        for (Padre p : padres) {
+            if(p.info.compareTo(menor) < 0)
+                menor = (T) p.info;
+            
+        }
+
+        return menor;
+    }
+
+
+    public boolean remplace(T org, T nueva){
+        Padre<T> obj = findPadre(org);
+
+        if(obj == null)
+            return false;
+        
+        obj.info = nueva;
+        return true;
+
+    }
 }

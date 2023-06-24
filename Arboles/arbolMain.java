@@ -17,6 +17,8 @@ public class arbolMain {
 
         System.out.println(arbol.minValue());
         System.out.println(arbol.maxValue());
+
+        System.out.println(arbol.isHoja(12));
         
 
     

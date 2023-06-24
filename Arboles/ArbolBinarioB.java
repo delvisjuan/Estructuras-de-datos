@@ -1,7 +1,5 @@
 package Arboles;
 
-import org.w3c.dom.Node;
-
 public class ArbolBinarioB<T extends Comparable<T>> {
     // insertar nodo
     // buscar nodo
@@ -62,37 +60,37 @@ public class ArbolBinarioB<T extends Comparable<T>> {
         if (root == null || root.key.compareTo(key) == 0)
             return root != null;
 
-        //informacion menor que la info del root
+        // informacion menor que la info del root
         if (key.compareTo(root.key) < 0)
             return searchRec(root.left, key);
         else
-            //informacion mayor que la info del root
+            // informacion mayor que la info del root
             return searchRec(root.right, key);
 
     }
 
-    //metodo para eliminar un nodo a partir de su info
-    public void delete(T key){
-        root =  deleteRec(root, key);
+    // metodo para eliminar un nodo a partir de su info
+    public void delete(T key) {
+        root = deleteRec(root, key);
     }
 
-    //metodo recursivo para eliminar un nodo a partir de su info
-    private Node<T> deleteRec(Node<T> root, T key){
-        if(root == null)
+    // metodo recursivo para eliminar un nodo a partir de su info
+    private Node<T> deleteRec(Node<T> root, T key) {
+        if (root == null)
             return root;
-        
-        if(key.compareTo(root.key) < 0)
+
+        if (key.compareTo(root.key) < 0)
             root.left = deleteRec(root.left, key);
-        else if(key.compareTo(root.key) > 0)
+        else if (key.compareTo(root.key) > 0)
             root.right = deleteRec(root.right, key);
-        else{
-            //nodo con un solo hijo o ninguno
-            if(root.left == null)
+        else {
+            // nodo con un solo hijo o ninguno
+            if (root.left == null)
                 return root.right;
             else if (root.right == null)
                 return root.left;
 
-            //nodo con dis hijos:
+            // nodo con dos hijos:
 
             root.key = minValueRec(root.right);// implementar
 
@@ -101,32 +99,56 @@ public class ArbolBinarioB<T extends Comparable<T>> {
         return root;
     }
 
-    public T minValue(){
+    public T minValue() {
         return minValueRec(root);
 
     }
 
-    private T minValueRec(Node<T> root){
+    private T minValueRec(Node<T> root) {
         // casos base de parada
         if (root.left == null)
             return root.key;
 
-        //desplazarse a la izquiera en busca del menor valor
+        // desplazarse a la izquiera en busca del menor valor
         return minValueRec(root.left);
     }
 
-    public T maxValue(){
+    public T maxValue() {
         return maxValueRec(root);
 
     }
 
-    private T maxValueRec(Node<T> root){
+    private T maxValueRec(Node<T> root) {
         // casos base de parada
         if (root.right == null)
             return root.key;
 
-        //desplazarse a la izquiera en busca del menor valor
+        // desplazarse a la derecha en busca del mayor valor
         return maxValueRec(root.right);
     }
+    
+    
 
+    public boolean isHoja(T key) {
+        return isHojaRec(root, key);
+    }
+
+    public boolean isHojaRec(Node<T> root, T key) {
+        if ( root == null) {
+            return false;
+        }
+
+        if (root.key.compareTo(key) == 0 ) {
+            if (root.left == null && root.right == null)
+                return true;
+            else
+                return false;
+        }
+
+        if (key.compareTo(root.key) < 0)
+            return isHojaRec(root.left, key);
+        else
+            return isHojaRec(root.right, key);
+
+    }
 }
