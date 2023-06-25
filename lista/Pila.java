@@ -1,3 +1,6 @@
+package lista;
+
+
 import java.util.Collection;
 
 public class Pila<T> { // FILO First In Last Out

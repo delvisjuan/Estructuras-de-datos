@@ -7,7 +7,7 @@ public class GrafoM<T> {
     private int matriz[][];
     private Object[] vertices;
 
-    public GrafoM(int n, Object[] vertices) {
+    public GrafoM(int n, Object[] vertices) {//no se pueden agreagar ni eliminar vertices despues de creado el grafo
         matriz = new int[n][n];
         this.vertices = vertices;
     }
@@ -85,7 +85,7 @@ public class GrafoM<T> {
     }
 
     // implementar
-    private List<Object> findAdy(Object o) {
+    public List<Object> findAdy(Object o) {
         List<Object> ady = new ArrayList<>();
         int org = find(o);
 
@@ -97,7 +97,7 @@ public class GrafoM<T> {
         return ady;
     }
     // implementar
-    private int findAdy2(Object o) {
+    public int findAdy2(Object o) {
         int count = 0;
         int org = find(o);
 

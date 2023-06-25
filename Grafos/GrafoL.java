@@ -8,6 +8,7 @@ public class GrafoL<T>{
     private class Vertice<T>{
         T info;
         List<T> ady = new ArrayList<T>();
+        
 
         public Vertice(T info) {
             this.info = info;
@@ -15,6 +16,8 @@ public class GrafoL<T>{
 
         
     }
+
+    
 
     private List<Vertice> vertices = new ArrayList<Vertice>();
 
