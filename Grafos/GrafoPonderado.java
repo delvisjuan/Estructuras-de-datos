@@ -110,7 +110,7 @@ public class GrafoPonderado<T> {
         return grafo.get(vertice).size();
     }
 
-    public Map<T, Integer> caminosMin(T origen){
+    public Map<T, Integer> caminosMin(T origen) {
         LinkedList<T> visitados = new LinkedList<>();
         PriorityQueue<Arista> cola = new PriorityQueue<>();
         Map<T, Integer> distancias = new HashMap<>();
@@ -119,18 +119,46 @@ public class GrafoPonderado<T> {
             distancias.put(v, null);
         }
 
-
         cola.add(new Arista<>(origen, 0));
+        distancias.put(origen, 0);
 
-        while(!cola.isEmpty()){
-            for (Arista<T> a : grafo.get(cola.poll())) {
-               // cola.add()
-                
+        while (!cola.isEmpty()) {
+            Arista<T> aristaActual = cola.poll();
+            T nodoActual = aristaActual.node;
+            int distanciaActual = aristaActual.peso;
+
+            // Verificar si el nodo actual ya ha sido visitado
+            if (visitados.contains(nodoActual)) {
+                continue;
+            }
+
+            // Marcar el nodo actual como visitado
+            visitados.add(nodoActual);
+
+            // Obtener las aristas adyacentes al nodo actual
+            List<Arista<T>> aristas = grafo.get(nodoActual);
+
+            for (Arista<T> arista : aristas) {
+                T nodoDestino = arista.node;
+                int pesoArista = arista.peso;
+
+                // Calcular la nueva distancia desde el origen hasta el nodo destino a través
+                // del nodo actual
+                int nuevaDistancia = distanciaActual + pesoArista;
+
+                // Actualizar la distancia mínima si es menor que la distancia actual almacenada
+                // en el mapa
+                if (distancias.get(nodoDestino) == null || nuevaDistancia < distancias.get(nodoDestino)) {
+                    distancias.put(nodoDestino, nuevaDistancia);
+
+                    // Agregar el nodo destino a la cola de prioridad para considerarlo en los
+                    // siguientes pasos
+                    cola.add(new Arista<>(nodoDestino, nuevaDistancia));
+                }
             }
         }
 
-
-        return null;
+        return distancias;
     }
 
     @Override

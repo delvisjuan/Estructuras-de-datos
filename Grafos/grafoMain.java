@@ -1,5 +1,7 @@
 package Grafos;
 
+import java.util.Map;
+
 public class grafoMain {
     public static void main(String[] args) {
 
@@ -41,11 +43,11 @@ public class grafoMain {
         grafo.addArista('F', 'E', 2);
         grafo.addArista('F', 'G', 1);
 
-        System.out.println(grafo);
+        Map<Character, Integer> map = grafo.caminosMin('A');
 
-        grafo.delVertice('E');
-
-        System.out.println(grafo);
+        for (Character c : map.keySet()) {
+            System.out.println(c + "=>" + map.get(c));            
+        }
 
     }
 }
