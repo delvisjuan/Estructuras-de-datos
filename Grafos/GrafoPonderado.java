@@ -96,8 +96,7 @@ public class GrafoPonderado<T> {
         int grado = 0;
 
         for (T v : grafo.keySet()) {
-            List<Arista<T>> lista = grafo.get(v);
-            for (Arista<T> c : lista) {
+            for (Arista<T> c : grafo.get(v)) {
                 if (c.node.equals(vertice))
                     grado++;
             }
@@ -112,7 +111,7 @@ public class GrafoPonderado<T> {
 
     public Map<T, Integer> caminosMin(T origen) {
         LinkedList<T> visitados = new LinkedList<>();
-        PriorityQueue<Arista> cola = new PriorityQueue<>();
+        PriorityQueue<Arista<T>> cola = new PriorityQueue<>();
         Map<T, Integer> distancias = new HashMap<>();
 
         for (T v : grafo.keySet()) {
@@ -120,6 +119,7 @@ public class GrafoPonderado<T> {
         }
 
         cola.add(new Arista<>(origen, 0));
+        
         distancias.put(origen, 0);
 
         while (!cola.isEmpty()) {
@@ -129,7 +129,8 @@ public class GrafoPonderado<T> {
 
             // Verificar si el nodo actual ya ha sido visitado
             if (visitados.contains(nodoActual)) {
-                continue;
+                continue;// detiene la ejecucion de la iteracion actual del bulce y comienza la proxima
+                         // iteracion
             }
 
             // Marcar el nodo actual como visitado

@@ -33,11 +33,11 @@ public class GrafoL<T>{
     }
 
     public boolean conectarArista(T org, T dest){
-        Vertice a = find(org);
-        Vertice b = find(dest);
+        Vertice verticeOrigen = find(org);
+        Vertice verticeDestino = find(dest);
 
-        if(a != null && b != null){
-            a.ady.add(b);
+        if(verticeOrigen != null && verticeDestino != null){
+            verticeOrigen.ady.add(dest);
             return true;
         }
         
@@ -46,31 +46,31 @@ public class GrafoL<T>{
     }
 
     public boolean eliminarArista(T org, T dest){
-        Vertice a = find(org);
-        Vertice b = find(dest);
+        Vertice verticeOrigen = find(org);
+        Vertice verticeDestino = find(dest);
 
-        if(a != null && b != null){
-            return a.ady.remove(b);
+        if(verticeOrigen != null && verticeDestino != null){
+            return verticeOrigen.ady.remove(dest);
         }
                 
         return false;
     }
 
     //implementar
-    public boolean exist(T o){
-        return (find(o) != null);
+    public boolean exist(T vertice){
+        return (find(vertice) != null);
     }
 
     //implementar
-    public boolean isAdy(T a, T b) {
-        Vertice aVert = find(a); 
-        Vertice bVert = find(b); 
+    public boolean isAdy(T org, T dest) {
+        Vertice orgVert = find(org); 
+        Vertice destVert = find(dest); 
 
-        if(aVert == null || bVert == null){
+        if(orgVert == null || destVert == null){
             return false;
         }
 
-        return aVert.ady.contains(bVert);
+        return orgVert.ady.contains(dest);
     }
 
     //implementar
@@ -78,7 +78,7 @@ public class GrafoL<T>{
     public int size() {
         int count = 0;
         for (Vertice v : vertices) {
-            count += v.ady.size();
+            count +=  v.ady.size();
         }
         return count;
     }
@@ -90,11 +90,12 @@ public class GrafoL<T>{
     }
 
     //implementar
-    private List<Object> findAdy(T o) {
-        Vertice vert = find(o);
+    public List<T> findAdy(T vertice) {
+        Vertice vert = find(vertice);
 
         if(vert == null)
-            throw new IllegalStateException();
+            return null;
+            
         return vert.ady;
     }
 }

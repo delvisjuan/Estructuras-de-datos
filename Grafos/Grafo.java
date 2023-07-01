@@ -52,7 +52,7 @@ public class Grafo<T> {
     //Implementar
 
     public int gradoEntrada(T vertice){//numeros de nodos desde los que se puede llegar a el
-        int grado =0;
+        int grado = 0;
 
         for (T v : grafo.keySet()) {
             if(grafo.get(v).contains(vertice))
