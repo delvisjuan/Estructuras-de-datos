@@ -119,8 +119,9 @@ public class GrafoPonderado<T> {
         }
 
         cola.add(new Arista<>(origen, 0));
-        
-        distancias.put(origen, 0);
+
+        distancias.put(origen, 0);// metodo put agrega la info al mapa, en caso de ya existir la llave cambia el
+                                  // valor actual por el nuevo valor suminstrado
 
         while (!cola.isEmpty()) {
             Arista<T> aristaActual = cola.poll();

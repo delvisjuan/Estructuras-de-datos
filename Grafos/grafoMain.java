@@ -14,9 +14,7 @@ public class grafoMain {
         grafo.addVertice('B');
         grafo.addVertice('C');
         grafo.addVertice('D');
-        grafo.addVertice('E');
-        grafo.addVertice('F');
-        grafo.addVertice('G');
+       
 
         // Para el no ponderado
 
@@ -32,16 +30,13 @@ public class grafoMain {
         // grafo.addArista('F', 'G');
 
         // Para el ponderado
-        grafo.addArista('A', 'B', 2);
-        grafo.addArista('A', 'F', 1);
-        grafo.addArista('B', 'C', 4);
-        grafo.addArista('B', 'E', 1);
-        grafo.addArista('C', 'E', 4);
-        grafo.addArista('C', 'D', 4);
-        grafo.addArista('D', 'E', 1);
-        grafo.addArista('D', 'G', 5);
-        grafo.addArista('F', 'E', 2);
-        grafo.addArista('F', 'G', 1);
+        grafo.addArista('A', 'B', 1);
+        grafo.addArista('A', 'D', 1);
+        grafo.addArista('B', 'D', 3);
+        grafo.addArista('C', 'B', 1);
+        grafo.addArista('C', 'A', 2);
+        grafo.addArista('D', 'C', 2);
+        
 
         Map<Character, Integer> map = grafo.caminosMin('A');
 

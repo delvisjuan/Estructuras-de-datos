@@ -19,12 +19,12 @@ public class GrafoL<T>{
 
     
 
-    private List<Vertice> vertices = new ArrayList<Vertice>();
+    private List<Vertice<T>> vertices = new ArrayList<Vertice<T>>();
 
 
     //implementar
-    private Vertice find(T o){
-        for (Vertice v : vertices) {
+    private Vertice<T> find(T o){
+        for (Vertice<T> v : vertices) {
             if(v.info.equals(o)){
                 return v;
             }
@@ -33,11 +33,12 @@ public class GrafoL<T>{
     }
 
     public boolean conectarArista(T org, T dest){
-        Vertice verticeOrigen = find(org);
-        Vertice verticeDestino = find(dest);
+        Vertice<T> verticeOrigen = find(org);
+        Vertice<T> verticeDestino = find(dest);
 
         if(verticeOrigen != null && verticeDestino != null){
             verticeOrigen.ady.add(dest);
+            // verticeDestino.ady.add(org);//si no es direccional descomentar la linea
             return true;
         }
         
@@ -46,8 +47,8 @@ public class GrafoL<T>{
     }
 
     public boolean eliminarArista(T org, T dest){
-        Vertice verticeOrigen = find(org);
-        Vertice verticeDestino = find(dest);
+        Vertice<T> verticeOrigen = find(org);
+        Vertice<T> verticeDestino = find(dest);
 
         if(verticeOrigen != null && verticeDestino != null){
             return verticeOrigen.ady.remove(dest);
@@ -63,8 +64,8 @@ public class GrafoL<T>{
 
     //implementar
     public boolean isAdy(T org, T dest) {
-        Vertice orgVert = find(org); 
-        Vertice destVert = find(dest); 
+        Vertice<T> orgVert = find(org); 
+        Vertice<T> destVert = find(dest); 
 
         if(orgVert == null || destVert == null){
             return false;
@@ -77,7 +78,7 @@ public class GrafoL<T>{
     //cantidad de aristas
     public int size() {
         int count = 0;
-        for (Vertice v : vertices) {
+        for (Vertice<T> v : vertices) {
             count +=  v.ady.size();
         }
         return count;
@@ -90,8 +91,9 @@ public class GrafoL<T>{
     }
 
     //implementar
+    //retorna la lista de adyacentes de un vertice
     public List<T> findAdy(T vertice) {
-        Vertice vert = find(vertice);
+        Vertice<T> vert = find(vertice);
 
         if(vert == null)
             return null;
