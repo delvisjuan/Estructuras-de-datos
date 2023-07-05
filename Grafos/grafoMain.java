@@ -44,5 +44,12 @@ public class grafoMain {
             System.out.println(c + "=>" + map.get(c));            
         }
 
+        //-----------------------------------------------------
+        System.out.println();
+        Map<Character, Arista<Character>> map2 = grafo.caminosMinRuta('A');
+
+        for (Character c : map2.keySet()) {
+            System.out.println(c + "=>" + map2.get(c));            
+        }
     }
 }

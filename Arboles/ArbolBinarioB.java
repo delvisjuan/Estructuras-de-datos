@@ -32,7 +32,7 @@ public class ArbolBinarioB<T extends Comparable<T>> {
 
     // funcion recursiva para insertar
     private Node<T> insertRec(Node<T> root, T key) {
-        // si el arbol esta vacio, retorna un nuevo nodo
+        // si el arbol esta vacio, retorna un nuevo nodo o se llega al lugar de insersion
         if (root == null) {
             root = new Node<T>(key);
             return root;

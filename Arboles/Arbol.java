@@ -1,6 +1,8 @@
 package Arboles;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Arbol<T extends Comparable<T>> {
 
@@ -19,7 +21,7 @@ public class Arbol<T extends Comparable<T>> {
     }
 
     // lista para almacenar nodos padres
-    private ArrayList<Padre> padres = new ArrayList<>();
+    private ArrayList<Padre<T>> padres = new ArrayList<>();
     private Padre<T> raiz = null;
 
     // constructor de la clase por default no se necesita implementar
@@ -94,7 +96,7 @@ public class Arbol<T extends Comparable<T>> {
      */
     private Padre<T> getFather(T info) {
 
-        for (Padre p : padres) {
+        for (Padre<T> p : padres) {
             if (p.hijos.contains(info)) {
                 return p;
             }
@@ -159,6 +161,7 @@ public class Arbol<T extends Comparable<T>> {
         if (hijo != null) {
             if (hijo.equals(raiz)) {
                 padres.clear();
+                raiz = null;
             } else {
                 padres.remove(hijo);
                 padre.hijos.remove(info);
@@ -205,9 +208,9 @@ public class Arbol<T extends Comparable<T>> {
     public T menor(){
         T menor = raiz.info;
 
-        for (Padre p : padres) {
+        for (Padre<T> p : padres) {
             if(p.info.compareTo(menor) < 0)
-                menor = (T) p.info;
+                menor =  p.info;
             
         }
 
@@ -225,4 +228,60 @@ public class Arbol<T extends Comparable<T>> {
         return true;
 
     }
+
+    public int CantUsuariosReferidosPar(){
+        int count = 0;
+
+        for (Padre<T> padre : padres) {
+            if(padre.hijos.size() != 0){
+                if(padre.hijos.size() % 2 == 0){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public List<T> sinHijos(){
+        List<T> lista = new LinkedList<>();
+        for (Padre<T> p : padres) {
+            if(p.hijos.size() == 0)
+                lista.add(p.info);
+            
+        }
+        return lista;
+    }
+
+    private List<Padre<T>> sinHijosNodo(){
+        List<Padre<T>> lista = new LinkedList<>();
+        for (Padre<T> p : padres) {
+            if(p.hijos.size() == 0)
+                lista.add(p);
+            
+        }
+        return lista;
+    }
+
+    // public List<Usuario> MinadoresExtremos(){//metodo comentado por falta de clases. Es un ejercicio dee una prueba
+    //     List<Usuario> lista = new ArrayList<>();
+        
+    //     for (Usuario usuario : usuarios) {
+    //         if(usuario.Saldo() > 1){
+    //             lista.add(usuario);
+    //         }
+    //     }
+
+    //     return lista;
+    // }
+
+    // public int CantidadPersonasConOjosDistintos(){
+    //     int count = 0;
+    //     for (Padre<T> p : padres) {
+    //         for (T h : p.hijos) {
+    //             if(!p.info.coloOjo().equals(h.coloOjo()))
+    //                 count++;
+    //         }
+    //     }
+    //     return count;
+    // }
 }

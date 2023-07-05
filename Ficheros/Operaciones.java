@@ -43,10 +43,8 @@ public class Operaciones {
             System.out.print("Nombre del Fichero: ");
             String file_name = sc.next();
 
-            File file = new File(file_name);
-            if(!file.exists()){
-                file.createNewFile();
-            }
+            File file = new File(file_name.trim());
+            
 
             PrintWriter pw = new PrintWriter(file);
 
