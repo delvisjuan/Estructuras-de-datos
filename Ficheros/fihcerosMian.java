@@ -8,10 +8,11 @@ public class fihcerosMian {
     public static void main(String[] args) {
         // Operaciones.Ejercicio1();
         // Operaciones.Ejercicio2();
-        // Operaciones.Ejercicio3();
+        //  Operaciones.Ejercicio3();
+        Operaciones.objetosStudent();
         
-        try {
-            Operaciones.escribirTeclado();
+        // try {
+            //Operaciones.escribirTeclado();
             // Escritura de texto
             // String text = "Otro texto dfdf";
             // List<String> lista = new ArrayList<>();
@@ -47,10 +48,10 @@ public class fihcerosMian {
             //     System.out.println(estudiante);
             // }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } 
-        // file
+        // } 
+        // catch (IOException e) {
+        //     e.printStackTrace();
+        // } 
         
 
        

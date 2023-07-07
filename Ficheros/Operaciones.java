@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Operaciones {
@@ -66,12 +68,14 @@ public class Operaciones {
 
             System.out.print("Nombre del Fichero: ");
             String fn = sc.next();
+            // String fn = "data.csv";
 
             System.out.print("Delimitador: ");
-
             String delimitador = sc.next();
 
-            BufferedReader br = new BufferedReader(new FileReader(fn));
+            // String delimitador = ",";
+            FileReader fr = new FileReader(fn);
+            BufferedReader br = new BufferedReader(fr);
 
             String line;
 
@@ -83,6 +87,7 @@ public class Operaciones {
                 System.out.println("");
             }
             br.close();
+            fr.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,6 +107,9 @@ public class Operaciones {
 
         String line = null;
 
+        Character a = sc.nextLine().charAt(0);
+        System.out.println(a.charValue());
+
         while (line != "") {
             System.out.print("Escribe el contindo: ");
             line = sc.nextLine().trim();
@@ -112,5 +120,32 @@ public class Operaciones {
 
         bw.close();
         fw.close();
+    }
+
+    public static void objetosStudent(){
+        Scanner sc = new Scanner(System.in);
+        List<Estudiante> lista = new LinkedList<>();
+
+        int opc = 0;
+
+        while (opc == 0) {
+            System.out.print("Edad: ");
+            int edad = sc.nextInt();
+            System.out.print("Nombre: ");
+            String name = sc.next();
+
+
+            lista.add(new Estudiante(name, edad));
+
+            System.out.print("introduce 0 para otro estudiante y otro num para cancelar: ");
+            opc = sc.nextInt();
+        }
+
+        try {
+            IOUtility.writeFileBin("estudiante.txt", lista);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
