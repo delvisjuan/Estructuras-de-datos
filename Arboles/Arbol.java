@@ -25,7 +25,6 @@ public class Arbol<T extends Comparable<T>> {
     private Padre<T> raiz = null;
 
     // constructor de la clase por default no se necesita implementar
-    
 
     /**
      * Metodo para saber si el arbol esta vacio
@@ -44,15 +43,15 @@ public class Arbol<T extends Comparable<T>> {
      */
     private Padre<T> findPadre(T info) {
         for (Padre<T> p : padres) {
-            if(p.info.equals(info))
+            if (p.info.equals(info))
                 return p;
         }
         // Iterator<Padre> iterator = padres.iterator();
         // while (iterator.hasNext()) {
-        //     Padre next = iterator.next();
-        //     if (next.info.equals(info)) {
-        //         return next;
-        //     }
+        // Padre next = iterator.next();
+        // if (next.info.equals(info)) {
+        // return next;
+        // }
         // }
 
         return null;
@@ -107,6 +106,7 @@ public class Arbol<T extends Comparable<T>> {
 
     /**
      * Metodo que retorna la info del padre de un nodo
+     * 
      * @param info
      * @return la info del padre
      */
@@ -131,7 +131,7 @@ public class Arbol<T extends Comparable<T>> {
     public boolean remove(T info) {
         Padre<T> padre = getFather(info);
         Padre<T> hijo = findPadre(info);
-        
+
         if (hijo != null) {
             if (hijo.equals(raiz)) {
                 padres.clear();
@@ -184,12 +184,13 @@ public class Arbol<T extends Comparable<T>> {
 
     /**
      * Metodo que retorna una lista con todos los ancestros de un nodo
+     * 
      * @param info
      * @return lista de ancestros
      */
     public ArrayList<T> ancestros(T info) {
         ArrayList<T> lista = new ArrayList<>();
-        
+
         Padre<T> padre = findPadre(info);
 
         if (padre != null) {
@@ -197,44 +198,42 @@ public class Arbol<T extends Comparable<T>> {
                 padre = getFather(padre.info);
                 lista.add(padre.info);
             }
-            
+
         }
         return lista;
 
     }
 
-
-    //Metodos de repaso no dados en el aula
-    public T menor(){
+    // Metodos de repaso no dados en el aula
+    public T menor() {
         T menor = raiz.info;
 
         for (Padre<T> p : padres) {
-            if(p.info.compareTo(menor) < 0)
-                menor =  p.info;
-            
+            if (p.info.compareTo(menor) < 0)
+                menor = p.info;
+
         }
 
         return menor;
     }
 
-
-    public boolean remplace(T org, T nueva){
+    public boolean remplace(T org, T nueva) {
         Padre<T> obj = findPadre(org);
 
-        if(obj == null)
+        if (obj == null)
             return false;
-        
+
         obj.info = nueva;
         return true;
 
     }
 
-    public int CantUsuariosReferidosPar(){
+    public int CantUsuariosReferidosPar() {
         int count = 0;
 
         for (Padre<T> padre : padres) {
-            if(padre.hijos.size() != 0){
-                if(padre.hijos.size() % 2 == 0){
+            if (padre.hijos.size() != 0) {
+                if (padre.hijos.size() % 2 == 0) {
                     count++;
                 }
             }
@@ -242,46 +241,74 @@ public class Arbol<T extends Comparable<T>> {
         return count;
     }
 
-    public List<T> sinHijos(){
+    public List<T> sinHijos() {
         List<T> lista = new LinkedList<>();
         for (Padre<T> p : padres) {
-            if(p.hijos.size() == 0)
+            if (p.hijos.size() == 0)
                 lista.add(p.info);
-            
+
         }
         return lista;
     }
 
-    private List<Padre<T>> sinHijosNodo(){
+    private List<Padre<T>> sinHijosNodo() {
         List<Padre<T>> lista = new LinkedList<>();
         for (Padre<T> p : padres) {
-            if(p.hijos.size() == 0)
+            if (p.hijos.size() == 0)
                 lista.add(p);
-            
+
         }
         return lista;
     }
 
-    // public List<Usuario> MinadoresExtremos(){//metodo comentado por falta de clases. Es un ejercicio dee una prueba
-    //     List<Usuario> lista = new ArrayList<>();
-        
-    //     for (Usuario usuario : usuarios) {
-    //         if(usuario.Saldo() > 1){
-    //             lista.add(usuario);
-    //         }
-    //     }
+    public int calcularAltura(T info) {
+        Padre<T> nodo = findPadre(info);
+        if (nodo == null) {
+            return 0;
+        } else {
+            int maxAltura = 0;
+            for (T hijo : nodo.hijos) {
+                int alturaHijo = calcularAltura(hijo);
+                maxAltura = Math.max(maxAltura, alturaHijo);
+            }
+            return maxAltura + 1;
+        }
+    }
 
-    //     return lista;
+    public List<T> caminoNodo(T info) {
+        List<T> camino = new ArrayList<>();
+
+        Padre<T> actual = findPadre(info);
+
+        while (actual != null) {
+            camino.add(actual.info);
+            actual = getFather(actual.info);
+        }
+
+        return camino;
+    }
+
+    // public List<Usuario> MinadoresExtremos(){//metodo comentado por falta de
+    // clases. Es un ejercicio dee una prueba
+    // List<Usuario> lista = new ArrayList<>();
+
+    // for (Usuario usuario : usuarios) {
+    // if(usuario.Saldo() > 1){
+    // lista.add(usuario);
+    // }
+    // }
+
+    // return lista;
     // }
 
     // public int CantidadPersonasConOjosDistintos(){
-    //     int count = 0;
-    //     for (Padre<T> p : padres) {
-    //         for (T h : p.hijos) {
-    //             if(!p.info.coloOjo().equals(h.coloOjo()))
-    //                 count++;
-    //         }
-    //     }
-    //     return count;
+    // int count = 0;
+    // for (Padre<T> p : padres) {
+    // for (T h : p.hijos) {
+    // if(!p.info.coloOjo().equals(h.coloOjo()))
+    // count++;
+    // }
+    // }
+    // return count;
     // }
 }

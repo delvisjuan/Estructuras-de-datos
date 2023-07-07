@@ -9,38 +9,50 @@ public class fihcerosMian {
         // Operaciones.Ejercicio1();
         // Operaciones.Ejercicio2();
         // Operaciones.Ejercicio3();
-
+        
         try {
-            //Escritura de texto
+            Operaciones.escribirTeclado();
+            // Escritura de texto
             // String text = "Otro texto dfdf";
-            // IOUtility.writeFileTxt("data.txt", text);
+            // List<String> lista = new ArrayList<>();
+            // lista.add("linea 1");
+            // lista.add("linea 2");
+            // lista.add("linea 3");
+            // lista.add("linea 4");
+            // lista.add("linea 5");
+            //  IOUtility.writeFileTxt("data.txt", lista);
 
-            //Lectura de texto
+            // Lectura de texto
             // String line = IOUtility.readFileTxt("data.txt");
             // System.out.println(line);
 
-            //Escritura binaria
+            // Escritura binaria
             // Estudiante e1 = new Estudiante("Delvis", 20);
             // Estudiante e2 = new Estudiante("Maura", 20);
             // Estudiante e3 = new Estudiante("Eliza", 20);
 
-            // IOUtility.writeFileBin("data.dat", e1);
+            // List<Object> lista = new ArrayList<>();
+            // lista.add(e1);
+            // lista.add(e3);
+            // lista.add(e2);
+
+            // IOUtility.writeFileBin("data.bin", lista);
             // IOUtility.writeFileBin("data.dat", e2);
             // IOUtility.writeFileBin("data.dat", e3);
 
-            //lectura binaria
-            List<Estudiante> lista =  IOUtility.readFileBin("data.dat");
+            // lectura binaria
+            // List<Estudiante> lista1 = IOUtility.readFileBinList("data.bin");
 
-            for (Estudiante estudiante : lista) {
-                System.out.println(estudiante);
-            }
+            // for (Estudiante estudiante : lista1) {
+            //     System.out.println(estudiante);
+            // }
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("here");
-            e.printStackTrace();
-        }
+        } 
+        // file
+        
+
+       
     }
 }

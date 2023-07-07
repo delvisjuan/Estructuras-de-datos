@@ -3,7 +3,7 @@ package Ficheros;
 import java.io.Serializable;
 
 public class Estudiante implements Serializable{
-    
+
     public String name;
     public int edad;
     

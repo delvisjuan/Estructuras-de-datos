@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
 
-public class ColaPrioridad<T extends Comparable> implements Queue<T> {
+public class ColaPrioridad<T extends Comparable<T>> implements Queue<T> {
 
     private class Node<T> {
 
